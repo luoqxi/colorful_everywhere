@@ -1,0 +1,605 @@
+{
+  "last_node_id": 22,
+  "last_link_id": 19,
+  "nodes": [
+    {
+      "id": 16,
+      "type": "KSampler",
+      "pos": [
+        1154,
+        183
+      ],
+      "size": {
+        "0": 315,
+        "1": 446
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 15,
+          "label": "model"
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 10,
+          "label": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 13,
+          "label": "negative"
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 14,
+          "label": "latent_image"
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "link": 16,
+          "widget": {
+            "name": "seed"
+          },
+          "label": "seed"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            17
+          ],
+          "shape": 3,
+          "slot_index": 0,
+          "label": "LATENT"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        922124914894779,
+        "randomize",
+        30,
+        3.5,
+        "dpmpp_3m_sde_gpu",
+        "sgm_uniform",
+        1
+      ],
+      "serialize_values": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 20,
+      "type": "VAEDecode",
+      "pos": [
+        1511,
+        108
+      ],
+      "size": {
+        "0": 210,
+        "1": 46
+      },
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 17,
+          "label": "samples"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 18,
+          "slot_index": 1,
+          "label": "vae"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            19
+          ],
+          "shape": 3,
+          "slot_index": 0,
+          "label": "IMAGE"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 8,
+      "type": "MZ_KolorsUNETLoader",
+      "pos": [
+        214,
+        194
+      ],
+      "size": {
+        "0": 315,
+        "1": 78
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            9
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "hid_proj",
+          "type": "TorchLinear",
+          "links": [
+            8,
+            12
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MZ_KolorsUNETLoader"
+      },
+      "widgets_values": [
+        "Kolors.fp16.safetensors"
+      ]
+    },
+    {
+      "id": 18,
+      "type": "EmptyLatentImage",
+      "pos": [
+        214,
+        424
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            14
+          ],
+          "shape": 3,
+          "slot_index": 0,
+          "label": "LATENT"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        832,
+        1216,
+        1
+      ],
+      "serialize_values": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 15,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        638,
+        170
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 9,
+          "label": "model"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            15
+          ],
+          "shape": 3,
+          "slot_index": 0,
+          "label": "MODEL"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "Kolors\\ColumbinaGenshinImpact_Kolors-LoRA-3800.safetensors",
+        0.75
+      ],
+      "serialize_values": [
+        null,
+        null
+      ]
+    },
+    {
+      "id": 17,
+      "type": "MZ_ChatGLM3",
+      "pos": [
+        638,
+        549
+      ],
+      "size": {
+        "0": 400,
+        "1": 200
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "chatglm3_model",
+          "type": "CHATGLM3MODEL",
+          "link": 11
+        },
+        {
+          "name": "hid_proj",
+          "type": "TorchLinear",
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            13
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MZ_ChatGLM3"
+      },
+      "widgets_values": [
+        "worst quality,low quality,illustration,3d,2d,painting,cartoons,sketch,watermark,"
+      ]
+    },
+    {
+      "id": 21,
+      "type": "VAELoader",
+      "pos": [
+        1148,
+        51
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            18
+          ],
+          "shape": 3,
+          "label": "VAE"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "sdxl_vae_fp16fix.safetensors"
+      ],
+      "serialize_values": [
+        null
+      ]
+    },
+    {
+      "id": 12,
+      "type": "DownloadAndLoadChatGLM3",
+      "pos": [
+        216,
+        319
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "chatglm3_model",
+          "type": "CHATGLM3MODEL",
+          "links": [
+            7,
+            11
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DownloadAndLoadChatGLM3"
+      },
+      "widgets_values": [
+        "fp16"
+      ]
+    },
+    {
+      "id": 19,
+      "type": "PrimitiveNode",
+      "pos": [
+        638,
+        31
+      ],
+      "size": {
+        "0": 210,
+        "1": 82
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            16
+          ],
+          "slot_index": 0,
+          "widget": {
+            "name": "seed"
+          },
+          "label": "INT"
+        }
+      ],
+      "properties": {
+        "Run widget replace on values": false
+      },
+      "widgets_values": [
+        922124914894779,
+        "randomize"
+      ],
+      "serialize_values": [
+        null,
+        null
+      ]
+    },
+    {
+      "id": 11,
+      "type": "MZ_ChatGLM3",
+      "pos": [
+        638,
+        303
+      ],
+      "size": {
+        "0": 400,
+        "1": 200
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "chatglm3_model",
+          "type": "CHATGLM3MODEL",
+          "link": 7
+        },
+        {
+          "name": "hid_proj",
+          "type": "TorchLinear",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            10
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MZ_ChatGLM3"
+      },
+      "widgets_values": [
+        "Columbina \\(Genshin Impact\\), cosplay, 1girl, solo, long hair, black hair, hair ornament, dress, sitting, full body, closed eyes, pink hair, multicolored hair, barefoot, blunt bangs, two-tone hair, feet, legs, toes, thigh strap, gradient hair, blurry background, soles, bandages, head wings, white ribbon, stairs, realistic, hands on own knees, eye mask, white mask"
+      ]
+    },
+    {
+      "id": 22,
+      "type": "PreviewImage",
+      "pos": [
+        1506,
+        223
+      ],
+      "size": {
+        "0": 361.996826171875,
+        "1": 432.72015380859375
+      },
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 19,
+          "label": "images"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    }
+  ],
+  "links": [
+    [
+      7,
+      12,
+      0,
+      11,
+      0,
+      "CHATGLM3MODEL"
+    ],
+    [
+      8,
+      8,
+      1,
+      11,
+      1,
+      "TorchLinear"
+    ],
+    [
+      9,
+      8,
+      0,
+      15,
+      0,
+      "MODEL"
+    ],
+    [
+      10,
+      11,
+      0,
+      16,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      11,
+      12,
+      0,
+      17,
+      0,
+      "CHATGLM3MODEL"
+    ],
+    [
+      12,
+      8,
+      1,
+      17,
+      1,
+      "TorchLinear"
+    ],
+    [
+      13,
+      17,
+      0,
+      16,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      14,
+      18,
+      0,
+      16,
+      3,
+      "LATENT"
+    ],
+    [
+      15,
+      15,
+      0,
+      16,
+      0,
+      "MODEL"
+    ],
+    [
+      16,
+      19,
+      0,
+      16,
+      4,
+      "INT"
+    ],
+    [
+      17,
+      16,
+      0,
+      20,
+      0,
+      "LATENT"
+    ],
+    [
+      18,
+      21,
+      0,
+      20,
+      1,
+      "VAE"
+    ],
+    [
+      19,
+      20,
+      0,
+      22,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7972024500000015,
+      "offset": [
+        344.8443831921447,
+        292.07283592857164
+      ]
+    },
+    "workspace_info": {
+      "id": "QWyi1MUJu2azVb9zhuSBj"
+    }
+  },
+  "version": 0.4
+}
